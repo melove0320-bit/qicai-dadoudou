@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#fff8e9">
+  <meta name="description" content="七彩打豆豆，轻松消除，快乐不停。微信扫码或长按小程序码，进入游戏。">
+  <title>七彩打豆豆｜轻松消除，快乐不停</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #26334a;
+      --muted: #68748a;
+      --paper: #fffdf7;
+      --pink: #ff7188;
+      --yellow: #ffd45c;
+      --blue: #69b8ff;
+      --green: #52c99a;
+      --purple: #ae83f5;
+    }
+    * { box-sizing: border-box; }
+    html { min-width: 320px; background: #fff8e9; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      overflow-x: hidden;
+      color: var(--ink);
+      font-family: ui-rounded, "SF Pro Rounded", "PingFang SC", "Microsoft YaHei", sans-serif;
+      background:
+        radial-gradient(ellipse at 5% 12%, #ffe6e8 0, transparent 28rem),
+        radial-gradient(ellipse at 95% 28%, #e2f4ff 0, transparent 30rem),
+        #fff8e9;
+    }
+    .page { width: min(100% - 32px, 1040px); margin: 0 auto; }
+    .topbar { display: flex; align-items: center; gap: 12px; padding: 22px 0; }
+    .brand-mark {
+      display: grid; width: 42px; height: 42px; place-items: center;
+      border: 3px solid var(--ink); border-radius: 15px; background: var(--yellow);
+      box-shadow: 3px 3px 0 var(--ink); font-size: 22px; transform: rotate(-5deg);
+    }
+    .brand-name { font-size: 16px; font-weight: 900; letter-spacing: .04em; }
+    .hero {
+      position: relative; display: grid; grid-template-columns: 1fr 390px; align-items: center;
+      gap: clamp(24px, 6vw, 72px); padding: clamp(32px, 7vw, 82px) clamp(10px, 5vw, 52px) 70px;
+      min-height: 590px;
+    }
+    .intro { position: relative; z-index: 1; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px; padding: 8px 13px;
+      border: 2px solid var(--ink); border-radius: 999px; background: #fff;
+      box-shadow: 3px 3px 0 var(--ink); font-size: 13px; font-weight: 800;
+    }
+    .eyebrow::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--green); }
+    h1 { margin: 24px 0 14px; font-size: clamp(42px, 6.2vw, 72px); line-height: 1.12; letter-spacing: -.06em; }
+    h1 span { display: block; color: #f25f79; }
+    .lead { margin: 0; color: var(--muted); font-size: clamp(18px, 2vw, 22px); font-weight: 700; }
+    .features { display: flex; flex-wrap: wrap; gap: 10px; margin: 28px 0 0; padding: 0; list-style: none; }
+    .features li { padding: 9px 13px; border-radius: 12px; background: #fff; box-shadow: 0 4px 16px #39476712; font-size: 14px; font-weight: 750; }
+    .features li:nth-child(1) { color: #e45572; }
+    .features li:nth-child(2) { color: #357fc2; }
+    .features li:nth-child(3) { color: #29956a; }
+    .bean-cloud { display: flex; gap: 10px; align-items: end; margin-top: 42px; height: 46px; }
+    .bean { width: 27px; aspect-ratio: 1; border: 3px solid #fff; border-radius: 50%; box-shadow: 0 3px 9px #26334a20; }
+    .bean:nth-child(1) { background: var(--pink); transform: translateY(-6px); }
+    .bean:nth-child(2) { width: 34px; background: var(--yellow); }
+    .bean:nth-child(3) { background: var(--blue); transform: translateY(-11px); }
+    .bean:nth-child(4) { width: 22px; background: var(--green); }
+    .qr-card {
+      position: relative; z-index: 1; width: 100%; padding: 24px 24px 23px;
+      border: 3px solid var(--ink); border-radius: 30px; background: #fff;
+      box-shadow: 9px 10px 0 var(--ink); text-align: center;
+    }
+    .qr-label { margin: 1px 0 16px; font-size: 16px; font-weight: 900; }
+    .qr-frame { width: min(100%, 310px); margin: 0 auto; padding: 9px; border: 2px solid #eef0f4; border-radius: 19px; background: #fff; }
+    .qr-frame img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: contain; image-rendering: auto; }
+    .qr-hint { margin: 15px 0 0; color: var(--muted); font-size: 13px; line-height: 1.65; }
+    .qr-hint strong { color: var(--ink); }
+    .orbit { position: absolute; border: 2px dashed #f1bf55; border-radius: 50%; pointer-events: none; }
+    .orbit.one { width: 118px; height: 118px; top: 28px; right: 25px; opacity: .55; }
+    .orbit.two { width: 64px; height: 64px; bottom: 48px; left: 44%; border-color: #8dcdf3; opacity: .7; }
+    .spark { position: absolute; font-size: 30px; color: #f1ad25; }
+    .spark.a { top: 75px; left: 44%; transform: rotate(15deg); }
+    .spark.b { right: -5px; bottom: 160px; color: #f27b93; font-size: 24px; }
+    footer { padding: 22px 0 max(26px, env(safe-area-inset-bottom)); color: #8991a0; text-align: center; font-size: 12px; }
+    footer strong { color: #536078; }
+    @media (max-width: 760px) {
+      .page { width: min(100% - 28px, 480px); }
+      .topbar { padding: 17px 0 9px; }
+      .hero { grid-template-columns: 1fr; gap: 30px; min-height: auto; padding: 36px 8px 34px; }
+      h1 { margin-top: 20px; font-size: clamp(43px, 12vw, 60px); }
+      .features { gap: 8px; margin-top: 22px; }
+      .features li { padding: 8px 10px; font-size: 13px; }
+      .bean-cloud { margin-top: 24px; }
+      .qr-card { width: min(100%, 390px); justify-self: center; padding: 19px 18px 18px; border-radius: 25px; box-shadow: 6px 7px 0 var(--ink); }
+      .qr-frame { width: min(100%, 320px); }
+      .orbit.one { top: 20px; right: -4px; width: 75px; height: 75px; }
+      .orbit.two { display: none; }
+      .spark.a { top: 19px; left: auto; right: 91px; font-size: 24px; }
+      .spark.b { right: -2px; bottom: 115px; }
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      .bean { animation: bob 2.8s ease-in-out infinite alternate; }
+      .bean:nth-child(2) { animation-delay: .35s; }
+      .bean:nth-child(3) { animation-delay: .7s; }
+      @keyframes bob { to { translate: 0 -5px; } }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="topbar" aria-label="游戏名称">
+      <span class="brand-mark" aria-hidden="true">●</span>
+      <span class="brand-name">七彩打豆豆</span>
+    </header>
+    <main class="hero">
+      <span class="orbit one" aria-hidden="true"></span>
+      <span class="orbit two" aria-hidden="true"></span>
+      <span class="spark a" aria-hidden="true">✳</span>
+      <span class="spark b" aria-hidden="true">✦</span>
+      <section class="intro">
+        <div class="eyebrow">一起来放松一下</div>
+        <h1>七彩<span>打豆豆</span></h1>
+        <p class="lead">轻松消除，快乐不停！</p>
+        <ul class="features" aria-label="游戏特点">
+          <li>轻松休闲</li><li>简单易上手</li><li>随时开玩</li>
+        </ul>
+        <div class="bean-cloud" aria-hidden="true"><i class="bean"></i><i class="bean"></i><i class="bean"></i><i class="bean"></i></div>
+      </section>
+      <section class="qr-card" aria-labelledby="qr-title">
+        <h2 class="qr-label" id="qr-title">微信扫码，即可进入游戏</h2>
+        <div class="qr-frame">
+          <img src="assets/mini-program-code.png" width="430" height="430" alt="七彩打豆豆微信小游戏永久小程序码" fetchpriority="high" decoding="sync">
+        </div>
+        <p class="qr-hint"><strong>也可以长按识别小程序码</strong><br>请使用微信扫一扫，或在微信中打开本页</p>
+      </section>
+    </main>
+    <footer><strong>七彩打豆豆</strong> · 轻松消除，快乐不停</footer>
+  </div>
+</body>
+</html>
